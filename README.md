@@ -14,6 +14,16 @@ h
 h
 h
 
+### Запуск через докер
+
+```bash
+docker build -t memoji .
+```
+
+```bash
+docker run -d -p 3001:3000 --name memoji memoji
+```
+
 ```css
 h1 {
   font-family: Arial, Helvetica, sans-serif;
