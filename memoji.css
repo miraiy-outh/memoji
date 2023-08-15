@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #cfd0cf;
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    line-height: 47px;
+    text-align: center;
+    color: #434344;
+    margin: 40px 0;
+}
+
+.cards {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 130px 130px 130px 130px;
+    grid-gap: 25px;
+}
+
+input {
+    opacity: 0%;
+    width: 0px;
+    height: 0px;
+}
+
+.card {
+    height: 130px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.front,
+.back {
+    backface-visibility: hidden;
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 9px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.back {
+    display: flex;
+    border: 5px solid white;
+    background: linear-gradient(45deg, #22ab93, #19668d);
+}
+
+.front {
+    transform: rotateY(180deg);
+    display: flex;
+    background: white;
+}
+
+.emoji {
+    font-size: 75px;
+    margin: 0;
+}
+
+.reversed,
+.ok {
+    transform: rotateY(180deg);
+}
+
+.green {
+    background: #5ad66f;
+}
+
+.red {
+    background: #f44336;
+}
+
+.timer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    line-height: 36px;
+    text-align: center;
+    color: #434344;
+    margin-top: 30px;
+}
+
+.back_final {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.final {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+    min-width: 350px;
+    background: white;
+}
+
+.button_again {
+    height: 40px;
+    background: linear-gradient(-45deg, #22ab93, #19668d);
+    border-radius: 9px;
+    border: 0px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    margin: 40px 0 30px;
+}
+
+.button_text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    margin: auto 30px;
+}
+
+.word {
+    display: none;
+}
+
+.letter {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    display: inline-block;
+    color: #434344;
+    margin: 30px 0 0;
+}
