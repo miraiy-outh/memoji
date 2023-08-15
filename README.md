@@ -7,14 +7,6 @@ npm install
 ```
 npm run dev
 ```
-hhhh
-hhhh
-hhhh
-h
-h
-h
-
-тут бдет конфликт ромы
 
 ### Запуск через докер
 
