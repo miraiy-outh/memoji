@@ -1,6 +1,10 @@
 ### Запуск
 
 ```
+cd frontend
+```
+
+```
 npm install
 ```
 
