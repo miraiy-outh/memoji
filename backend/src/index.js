@@ -1,7 +1,7 @@
 import express from 'express';
 import sqlite3 from 'sqlite3'
 import bodyParser from 'body-parser';
-import { createResultsTable, dropTable, insertResults, selectAllResults } from './db-requests.js';
+import { createResultsTable, deleteAllResults, dropTable, insertResults, selectAllResults } from './db-requests.js';
 
 const app = express();
 const port = 8080;
@@ -56,6 +56,25 @@ app.get('/results', async (req, res) => {
         else {
             res.send({
                 success: true,
+                data: data
+            });
+        }
+    })
+
+});
+
+app.get('/results/clear-all', async (req, res) => {
+
+    db.all(deleteAllResults, (err, data) => {
+        if (err) {
+            res.send({
+                success: false,
+                message: err.message
+            });
+        }
+        else {
+            res.send({
+                success: true,
             });
         }
     })
@@ -91,7 +110,6 @@ app.post('/results', function (req, res) {
             console.log(rows);
             res.send({
                 success: true,
-                data: rows
             });
         }
     })

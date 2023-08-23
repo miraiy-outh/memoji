@@ -10,6 +10,7 @@ export const dropTable = `DROP TABLE ${resultsTableName};`
 
 export const selectAllResults = `SELECT * FROM ${resultsTableName};`
 
+export const deleteAllResults = `DELETE FROM ${resultsTableName};`
 
 export function insertResults(name, score) {
     return `INSERT INTO ${resultsTableName} (name, score)
