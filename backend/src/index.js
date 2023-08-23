@@ -107,7 +107,6 @@ app.post('/results', function (req, res) {
             });
         }
         else {
-            console.log(rows);
             res.send({
                 success: true,
             });
