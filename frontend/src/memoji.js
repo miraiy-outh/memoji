@@ -1,3 +1,5 @@
+const nameInput = document.querySelector('.name');
+
 const emojies = ['🐱', '🐯', '🦁', '🐸', '🦄', '🐼']
 
 function createfullEmojiess() {
@@ -81,7 +83,6 @@ function createTimer() {
     var startTime = 60;
     functionTimer = setInterval(function () {
         var cards = document.querySelectorAll('.ok');
-        console.log(startTime);
         if (startTime === 60) {
             timer.textContent = '1:00';
         }
@@ -120,24 +121,42 @@ function startNewGame() {
     createTimer();
 }
 
+
+function saveCheck() {
+    nameInputCheck = (/^[A-Z|a-z]{1}[-|_|A-Z|a-z]{3,10}$/).test(nameInput.value);
+    console.log(nameInputCheck);
+    if (nameInputCheck === true) {
+        nameInput.classList.remove('error_name');
+    }
+    else {
+        nameInput.classList.add('error_name');
+    }
+
+}
+
 function createFinalTab() {
     var finalTab = document.querySelector('.back_final');
-    var buttonText = document.querySelector('.button_text');
+    var buttonTextAgain = document.querySelector('.again');
+    var buttonSave = document.querySelector('.button_save_results');
     var cards = document.querySelectorAll('.ok');
     if (cards.length === 12) {
         var win = document.querySelector('.win');
         win.style.display = 'inline-block';
-        buttonText.textContent = 'Play again';
+        nameInput.style.display = 'inline-block';
+        buttonSave.style.display = 'inline-block';
+        buttonTextAgain.textContent = 'Play again';
     }
     else {
         var lose = document.querySelector('.lose');
         lose.style.display = 'inline-block';
-        buttonText.textContent = 'Try again';
+        buttonTextAgain.textContent = 'Try again';
     }
     finalTab.style.display = 'flex';
     button = document.querySelector('.button_again');
     button.addEventListener('click', startNewGame);
+    buttonSave.addEventListener('click', saveCheck);
 }
+
 
 createCards();
 createTimer();
