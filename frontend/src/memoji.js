@@ -81,7 +81,7 @@ function createCard(content) {
 }
 
 function createResults() {
-    fetch("http://localhost:8080/results")
+    fetch("http://194.31.175.153:8080/results")
         .then((response) => response.json())
         .then((result) => {
             const { data } = result;
@@ -179,7 +179,7 @@ function saveResult(playerName, result) {
         name: playerName,
         score: result
     };
-    fetch("http://localhost:8080/results", {
+    fetch("http://194.31.175.153:8080/results", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
