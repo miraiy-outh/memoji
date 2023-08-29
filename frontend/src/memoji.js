@@ -1,4 +1,5 @@
 const nameInput = document.querySelector('.name');
+const buttonSave = document.querySelector('.button_save_results');
 
 const emojies = ['🐱', '🐯', '🦁', '🐸', '🦄', '🐼']
 
@@ -12,9 +13,9 @@ fullEmojies = createfullEmojiess();
 nodeListCards = [];
 
 function createCards() {
-    for (let i = 0; i < fullEmojies.length; i++) {
-        createCard(fullEmojies[i], i)
-    }
+    fullEmojies.forEach((fullEmoji) => {
+        createCard(fullEmoji);
+    });
 }
 
 function reverseCard() {
@@ -60,7 +61,7 @@ function reverseCard() {
     }
 }
 
-function createCard(content, i) {
+function createCard(content) {
     const cards = document.querySelector('.cards');
     const card = document.createElement('div');
     card.classList.add('card');
@@ -76,6 +77,32 @@ function createCard(content, i) {
     card.appendChild(front);
     card.addEventListener('click', reverseCard)
     cards.appendChild(card);
+}
+
+function createResults() {
+    fetch("http://localhost:8080/results")
+        .then((response) => response.json())
+        .then((result) => {
+            const { data } = result;
+            data.forEach((item) => {
+                createResult(item.name, item.score);
+            });
+        })
+};
+
+function createResult(playerName, result) {
+    const results = document.querySelector('.results');
+    const leader = document.createElement('div');
+    leader.classList.add('leader');
+    const leaderName = document.createElement('p');
+    leaderName.classList.add('leader_name');
+    leaderName.textContent = playerName;
+    const score = document.createElement('div');
+    score.classList.add('score');
+    score.textContent = result;
+    leader.appendChild(leaderName);
+    leader.appendChild(score);
+    results.appendChild(leader);
 }
 
 function createTimer() {
@@ -104,7 +131,10 @@ function createTimer() {
     }, 1000);
     startTime = 60;
 }
+
 function startNewGame() {
+    buttonSave.disabled = false;
+    nameInput.value = '';
     var finalTab = document.querySelector('.back_final');
     finalTab.style.display = 'none';
     oldCards = document.querySelectorAll('.card');
@@ -116,17 +146,27 @@ function startNewGame() {
         var parent = oldCard.parentNode;
         parent.removeChild(oldCard);
     });
+    oldResults = document.querySelectorAll('.leader');
+    oldResults.forEach((oldResult) => {
+        var parent = oldResult.parentNode;
+        parent.removeChild(oldResult);
+    });
     fullEmojies = createfullEmojiess();
     createCards();
+    createResults();
     createTimer();
 }
 
 
 function saveCheck() {
-    nameInputCheck = (/^[A-Z|a-z]{1}[-|_|A-Z|a-z]{3,10}$/).test(nameInput.value);
-    console.log(nameInputCheck);
+    var nameInputValue = nameInput.value;
+    var nameInputCheck = (/^[A-Z|a-z]{1}[-|_|A-Z|a-z]{3,10}$/).test(nameInputValue);
+    var timerValue = document.querySelector('.timer').textContent;
+    var score = 60 - Number(timerValue.slice(2));
     if (nameInputCheck === true) {
         nameInput.classList.remove('error_name');
+        saveResult(nameInputValue, score);
+        buttonSave.disabled = true;
     }
     else {
         nameInput.classList.add('error_name');
@@ -134,10 +174,26 @@ function saveCheck() {
 
 }
 
+function saveResult(playerName, result) {
+
+    const data = {
+        name: playerName,
+        score: result
+    };
+    fetch("http://localhost:8080/results", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    console.log(data);
+
+}
+
 function createFinalTab() {
     var finalTab = document.querySelector('.back_final');
     var buttonTextAgain = document.querySelector('.again');
-    var buttonSave = document.querySelector('.button_save_results');
     var cards = document.querySelectorAll('.ok');
     if (cards.length === 12) {
         var win = document.querySelector('.win');
@@ -149,6 +205,8 @@ function createFinalTab() {
     else {
         var lose = document.querySelector('.lose');
         lose.style.display = 'inline-block';
+        nameInput.style.display = 'none';
+        buttonSave.style.display = 'none';
         buttonTextAgain.textContent = 'Try again';
     }
     finalTab.style.display = 'flex';
@@ -159,5 +217,6 @@ function createFinalTab() {
 
 
 createCards();
+createResults();
 createTimer();
 

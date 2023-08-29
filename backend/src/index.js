@@ -2,6 +2,7 @@ import express from 'express';
 import sqlite3 from 'sqlite3'
 import bodyParser from 'body-parser';
 import { createResultsTable, deleteAllResults, dropTable, insertResults, selectAllResults } from './db-requests.js';
+import cors from 'cors';
 
 const app = express();
 const port = 8080;
@@ -10,7 +11,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-
+app.use(cors({
+    origin: "*"
+}))
 const db_name = "./database/db.sqlite";
 
 const runInit = false
