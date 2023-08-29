@@ -2,6 +2,7 @@ const nameInput = document.querySelector('.name');
 const buttonSave = document.querySelector('.button_save_results');
 
 const emojies = ['🐱', '🐯', '🦁', '🐸', '🦄', '🐼']
+let startTime = 60;
 
 function createfullEmojiess() {
     var fullEmojies = [].concat(emojies, emojies)
@@ -107,7 +108,6 @@ function createResult(playerName, result) {
 
 function createTimer() {
     timer = document.querySelector('.timer');
-    var startTime = 60;
     functionTimer = setInterval(function () {
         var cards = document.querySelectorAll('.ok');
         if (startTime === 60) {
@@ -127,7 +127,7 @@ function createTimer() {
             clearInterval(functionTimer);
             createFinalTab()
         }
-        startTime -= 1;
+        startTime--;
     }, 1000);
     startTime = 60;
 }
@@ -161,8 +161,7 @@ function startNewGame() {
 function saveCheck() {
     var nameInputValue = nameInput.value;
     var nameInputCheck = (/^[A-Z|a-z]{1}[-|_|A-Z|a-z]{3,10}$/).test(nameInputValue);
-    var timerValue = document.querySelector('.timer').textContent;
-    var score = 60 - Number(timerValue.slice(2));
+    var score = startTime;
     if (nameInputCheck === true) {
         nameInput.classList.remove('error_name');
         saveResult(nameInputValue, score);
@@ -187,7 +186,6 @@ function saveResult(playerName, result) {
             "Content-type": "application/json; charset=UTF-8"
         }
     });
-    console.log(data);
 
 }
 
