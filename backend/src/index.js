@@ -59,7 +59,7 @@ app.get('/results', async (req, res) => {
         else {
             res.send({
                 success: true,
-                data: data
+                data: data.sort((a, b) => b.score - a.score).slice(0, 9)
             });
         }
     })
